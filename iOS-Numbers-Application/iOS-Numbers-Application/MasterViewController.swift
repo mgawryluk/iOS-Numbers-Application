@@ -7,24 +7,56 @@
 //
 
 import UIKit
+import Alamofire
+
+struct Number: Codable {
+    let name: String?
+    let imageURL: String?
+    let text: String?
+}
 
 class MasterViewController: UITableViewController {
 
     var detailViewController: DetailViewController? = nil
     var objects = [Any]()
+    
+    let numbersURL = "http://dev.tapptic.com/test/json.php"
+    var numbers = [Number]()
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         navigationItem.leftBarButtonItem = editButtonItem
-
+        
+        Alamofire.request(numbersURL).responseJSON { response in
+            let json = response.data
+            
+            do {
+                let decoder = JSONDecoder()
+                self.numbers = try decoder.decode([Number].self, from: json!)
+                
+                for number in self.numbers {
+                    print(number.name!)
+                }
+                
+            } catch let error {
+                print(error)
+                
+            }
+            
+        }
+        
+        
+        
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
         navigationItem.rightBarButtonItem = addButton
         if let split = splitViewController {
             let controllers = split.viewControllers
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
         }
+        
+       
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -84,6 +116,8 @@ class MasterViewController: UITableViewController {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
         }
     }
+    
+    
 
 
 }
