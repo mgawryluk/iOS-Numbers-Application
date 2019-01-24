@@ -17,6 +17,9 @@ struct Number: Codable {
 
 class MasterViewController: UITableViewController {
 
+    @IBOutlet weak var image: UIImageView!
+    @IBOutlet weak var name: UILabel!
+    
     var detailViewController: DetailViewController? = nil
     var objects = [Any]()
     
