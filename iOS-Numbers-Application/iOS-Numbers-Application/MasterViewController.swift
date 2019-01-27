@@ -8,120 +8,97 @@
 
 import UIKit
 import Alamofire
+import AlamofireImage
 
-struct Number: Codable {
-    let name: String?
-    let imageURL: String?
-    let text: String?
+protocol NumberSelectionDelegate: class {
+    func numberSelected(_ newNumber: Number)
 }
 
 class MasterViewController: UITableViewController {
 
-    @IBOutlet weak var image: UIImageView!
-    @IBOutlet weak var name: UILabel!
+    weak var delegate: NumberSelectionDelegate?
+ 
     
     var detailViewController: DetailViewController? = nil
     var objects = [Any]()
     
     let numbersURL = "http://dev.tapptic.com/test/json.php"
     var numbers = [Number]()
-
-
+    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         navigationItem.leftBarButtonItem = editButtonItem
         
         Alamofire.request(numbersURL).responseJSON { response in
-            let json = response.data
+            if let json = response.result.value {
+                
+                let numbersArray : NSArray = json as! NSArray
+                
+                for i in 0..<numbersArray.count {
+                    
+                    self.numbers.append(Number(
+                        name: ((numbersArray[i]) as AnyObject).value(forKey: "name") as? String,
+                        image: ((numbersArray[i]) as AnyObject).value(forKey: "image") as? String,
+                        text: ((numbersArray[i]) as AnyObject).value(forKey: "text") as? String
+                        ))
             
-            do {
-                let decoder = JSONDecoder()
-                self.numbers = try decoder.decode([Number].self, from: json!)
-                
-                for number in self.numbers {
-                    print(number.name!)
+            self.tableView.reloadData()
+            
                 }
-                
-            } catch let error {
-                print(error)
-                
             }
             
+        self.tableView.reloadData()
+            
         }
-        
-        
-        
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
-        navigationItem.rightBarButtonItem = addButton
-        if let split = splitViewController {
-            let controllers = split.viewControllers
-            detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
-        }
-        
-       
+
     }
 
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MasterViewTableViewCell
+        
+        //        let number = numbers[indexPath.row] as! NSDate
+        let number: Number
+        number = numbers[indexPath.row]
+        cell.numberLabel.text = number.name
+        
+        Alamofire.request(number.image!).responseImage { response in
+            debugPrint(response)
+            
+            if let image = response.result.value {
+                cell.numberImage?.image = image
+            }
+        }
+        
+        return cell
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
         super.viewWillAppear(animated)
     }
 
-    @objc
-    func insertNewObject(_ sender: Any) {
-        objects.insert(NSDate(), at: 0)
-        let indexPath = IndexPath(row: 0, section: 0)
-        tableView.insertRows(at: [indexPath], with: .automatic)
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return numbers.count
     }
 
-    // MARK: - Segues
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showDetail" {
-            if let indexPath = tableView.indexPathForSelectedRow {
-                let object = objects[indexPath.row] as! NSDate
-                let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
-                controller.detailItem = object
-                controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
-                controller.navigationItem.leftItemsSupplementBackButton = true
-            }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedNumber = numbers[indexPath.row]
+        delegate?.numberSelected(selectedNumber)
+        if let detailViewController = delegate as? DetailViewController,
+            let detailNavigationController = detailViewController.navigationController {
+            splitViewController?.showDetailViewController(detailNavigationController, sender: nil)
         }
     }
 
-    // MARK: - Table View
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return objects.count
-    }
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-
-        let object = objects[indexPath.row] as! NSDate
-        cell.textLabel!.text = object.description
-        return cell
-    }
-
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            objects.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
-        }
-    }
-    
-    
-
+  
 
 }
 

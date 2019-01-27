@@ -10,7 +10,10 @@ import UIKit
 
 class MasterViewTableViewCell: UITableViewCell {
 
-   
+    
+    @IBOutlet weak var numberLabel: UILabel!
+    @IBOutlet weak var numberImage: UIImageView!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -8,14 +8,17 @@
 
 import Foundation
 
-class Image {
+class Number {
+    
     var name: String?
     var image: String?
     var text: String?
     
     init(name: String?, image: String?, text: String?) {
+        
         self.name = name
         self.image = image
         self.text = text
+
     }
 }

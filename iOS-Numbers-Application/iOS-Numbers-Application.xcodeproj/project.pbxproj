@@ -14,7 +14,7 @@
 		902F463721F9044400E0B82D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 902F463521F9044400E0B82D /* Main.storyboard */; };
 		902F463921F9044500E0B82D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 902F463821F9044500E0B82D /* Assets.xcassets */; };
 		902F463C21F9044500E0B82D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 902F463A21F9044500E0B82D /* LaunchScreen.storyboard */; };
-		90E27DD921FA62D9004E55B6 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E27DD821FA62D9004E55B6 /* Image.swift */; };
+		90E27DD921FA62D9004E55B6 /* Number.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E27DD821FA62D9004E55B6 /* Number.swift */; };
 		90E27DDB21FA63B8004E55B6 /* MasterViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E27DDA21FA63B8004E55B6 /* MasterViewTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -27,7 +27,7 @@
 		902F463821F9044500E0B82D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		902F463B21F9044500E0B82D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		902F463D21F9044500E0B82D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		90E27DD821FA62D9004E55B6 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		90E27DD821FA62D9004E55B6 /* Number.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Number.swift; sourceTree = "<group>"; };
 		90E27DDA21FA63B8004E55B6 /* MasterViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewTableViewCell.swift; sourceTree = "<group>"; };
 		BE7F57F9FEB2E46925BFF2A1 /* Pods_iOS_Numbers_Application.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOS_Numbers_Application.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C67E419A7384280EE71C6DEF /* Pods-iOS-Numbers-Application.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-Numbers-Application.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iOS-Numbers-Application/Pods-iOS-Numbers-Application.debug.xcconfig"; sourceTree = "<group>"; };
@@ -74,7 +74,7 @@
 				902F463821F9044500E0B82D /* Assets.xcassets */,
 				902F463A21F9044500E0B82D /* LaunchScreen.storyboard */,
 				902F463D21F9044500E0B82D /* Info.plist */,
-				90E27DD821FA62D9004E55B6 /* Image.swift */,
+				90E27DD821FA62D9004E55B6 /* Number.swift */,
 				90E27DDA21FA63B8004E55B6 /* MasterViewTableViewCell.swift */,
 			);
 			path = "iOS-Numbers-Application";
@@ -211,7 +211,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				90E27DD921FA62D9004E55B6 /* Image.swift in Sources */,
+				90E27DD921FA62D9004E55B6 /* Number.swift in Sources */,
 				902F463421F9044400E0B82D /* DetailViewController.swift in Sources */,
 				902F463221F9044400E0B82D /* MasterViewController.swift in Sources */,
 				902F463021F9044400E0B82D /* AppDelegate.swift in Sources */,
